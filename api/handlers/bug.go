@@ -7,9 +7,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetFishes(c *fiber.Ctx) error {
-	fishes := []models.Fish{}
-	database.DB.Db.Find(&fishes)
+func GetBugs(c *fiber.Ctx) error {
+	bugs := []models.Bug{}
+	database.DB.Db.Find(&bugs)
 
-	return c.Status(200).JSON(fishes)
+	return c.Status(200).JSON(bugs)
 }

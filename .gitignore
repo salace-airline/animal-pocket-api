@@ -23,3 +23,6 @@ go.work
 # Secret files
 .env
 tmp
+fishes.json
+bugs.json
+seaCreatures.json

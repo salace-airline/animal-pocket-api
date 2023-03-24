@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/salace-airline/ressources/database"
+	"github.com/salace-airline/animalpocketresources/database"
 
 	"github.com/gofiber/fiber/v2"
 )
