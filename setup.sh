@@ -3,7 +3,7 @@ sudo yum update -y
 sudo dnf update -y
 sudo yum install -y libxcrypt-compat
 sudo yum install docker -y
-sudo curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` \
+sudo curl -L https://github.com/docker/compose/releases/download/3.8.0/docker-compose-`uname -s`-`uname -m` \
     >~/docker-compose
 chmod +x ~/docker-compose
 sudo mv ~/docker-compose /usr/local/bin/docker-compose
