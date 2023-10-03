@@ -8,7 +8,7 @@ import (
 
 func setupRoutes(app *fiber.App) {
 	app.Get("/", handlers.GetWelcome)
-	app.Get("/fishes", handlers.GetFishes)
-	app.Get("/bugs", handlers.GetBugs)
-	app.Get("/sea-creatures", handlers.GetSeaCreatures)
+	app.Get("/fish", handlers.GetFishes)
+	app.Get("/bug", handlers.GetBugs)
+	app.Get("/sea-creature", handlers.GetSeaCreatures)
 }
