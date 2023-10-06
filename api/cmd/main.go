@@ -8,6 +8,8 @@ import (
 
 func main() {
 	database.ConnectDb()
+	database.Migrate()
+	database.IntegrateResources()
 
 	app := fiber.New()
 

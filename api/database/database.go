@@ -3,7 +3,6 @@ package database
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"os"
 
@@ -40,83 +39,82 @@ func ConnectDb() {
 	log.Println("connected")
 	db.Logger = logger.Default.LogMode(logger.Info)
 
-	// Verify if tables exists
-	if db.Migrator().HasTable("Fish") && db.Migrator().HasTable("Bug") && db.Migrator().HasTable("SeaCreature") {
-		fmt.Println("Fish, Bug and SeaCreature exist in database.")
-	} else {
-		db.AutoMigrate(&models.Fish{}, &models.Bug{}, &models.SeaCreature{})
-		fmt.Println("The table doesn't exist in database. \n Running migrations.")
-
-		//db.Migrator().DropTable(&models.Fish{}, &models.Bug{}, &models.SeaCreature{})
-
-		// Fish table
-		fileFish, err := os.Open("./database/fishes.json")
-		if err != nil {
-			fmt.Println("Error during file opening:", err)
-			return
-		}
-		defer fileFish.Close()
-
-		byteValueFish, _ := io.ReadAll(fileFish)
-		jsonStringFish := string(byteValueFish)
-
-		var dataFish map[string][]models.Fish
-		json.Unmarshal([]byte(jsonStringFish), &dataFish)
-		ressourcesFish := dataFish["fishes"]
-		for _, ressourceFish := range ressourcesFish {
-			err := db.Create(&ressourceFish).Error
-			if err != nil {
-				fmt.Println(err)
-			}
-		}
-		fmt.Println("Fishes were succesfully insert into database!")
-
-		// Bug table
-		fileBug, err := os.Open("./database/bugs.json")
-		if err != nil {
-			fmt.Println("Error during file opening:", err)
-			return
-		}
-		defer fileBug.Close()
-
-		byteValueBug, _ := io.ReadAll(fileBug)
-		jsonStringBug := string(byteValueBug)
-
-		var dataBug map[string][]models.Bug
-		json.Unmarshal([]byte(jsonStringBug), &dataBug)
-		ressourcesBug := dataBug["bugs"]
-		for _, ressourceBug := range ressourcesBug {
-			err := db.Create(&ressourceBug).Error
-			if err != nil {
-				fmt.Println(err)
-			}
-		}
-		fmt.Println("Bugs were succesfully insert into database!")
-
-		// Sea creature table
-		fileSeaCreature, err := os.Open("./database/seaCreatures.json")
-		if err != nil {
-			fmt.Println("Error during file opening:", err)
-			return
-		}
-		defer fileSeaCreature.Close()
-
-		byteValueSeaCreature, _ := io.ReadAll(fileSeaCreature)
-		jsonStringSeaCreature := string(byteValueSeaCreature)
-
-		var dataSeaCreature map[string][]models.SeaCreature
-		json.Unmarshal([]byte(jsonStringSeaCreature), &dataSeaCreature)
-		ressourcesSeaCreature := dataSeaCreature["sea_creatures"]
-		for _, ressourceSeaCreature := range ressourcesSeaCreature {
-			err := db.Create(&ressourceSeaCreature).Error
-			if err != nil {
-				fmt.Println(err)
-			}
-		}
-		fmt.Println("Sea Creatures were succesfully insert into database!")
-	}
-
 	DB = Dbinstance{
 		Db: db,
 	}
+}
+
+func Migrate() {
+	DB.Db.Migrator().DropTable(&models.Fish{}, &models.Bug{}, &models.SeaCreature{})
+	log.Println("running migrations")
+	DB.Db.AutoMigrate(&models.Fish{}, &models.Bug{}, &models.SeaCreature{})
+}
+
+func IntegrateResources() {
+	log.Println("integrate resources: fishes, bugs and sea creatures")
+	// Fish table
+	fileFish, err := os.Open("./database/fishes.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer fileFish.Close()
+
+	var fishes []models.Fish
+	decoderFish := json.NewDecoder(fileFish)
+	err = decoderFish.Decode(&fishes)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, fish := range fishes {
+		err := DB.Db.Create(&fish).Error
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	fmt.Println("Fishes were successfully insert into database!")
+
+	// Bug table
+	fileBug, err := os.Open("./database/bugs.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer fileBug.Close()
+
+	var bugs []models.Bug
+	decoderBug := json.NewDecoder(fileBug)
+	err = decoderBug.Decode(&bugs)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, bug := range bugs {
+		err := DB.Db.Create(&bug).Error
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	fmt.Println("Bugs were successfully insert into database!")
+
+	// Sea creature table
+	fileSeaCreature, err := os.Open("./database/bugs.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer fileSeaCreature.Close()
+
+	var seaCreatures []models.SeaCreature
+	decoderSea := json.NewDecoder(fileSeaCreature)
+	err = decoderSea.Decode(&seaCreatures)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, SeaCreature := range seaCreatures {
+		err := DB.Db.Create(&SeaCreature).Error
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	fmt.Println("Sea Creatures were successfully insert into database!")
 }
