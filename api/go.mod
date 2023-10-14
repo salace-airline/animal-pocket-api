@@ -4,7 +4,9 @@ go 1.13
 
 require (
 	github.com/gofiber/fiber/v2 v2.42.0
-	github.com/lib/pq v1.10.7
-	gorm.io/driver/postgres v1.5.0
-	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11
+	github.com/golang-jwt/jwt/v5 v5.0.0
+	github.com/lib/pq v1.10.9
+	golang.org/x/crypto v0.14.0
+	gorm.io/driver/postgres v1.5.3
+	gorm.io/gorm v1.25.5
 )
