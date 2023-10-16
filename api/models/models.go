@@ -5,6 +5,16 @@ import (
 	"gorm.io/gorm"
 )
 
+// User informations and caught resources
+type User struct {
+	ID          uint           `json:"id"`
+	Name        string         `json:"name" validate:"required,min=3,max=20"`
+	Email       string         `json:"email" gorm:"unique" validate:"required,email"`
+	Password    []byte         `json:"-"` // json:"-" means password will not return with the response
+	CaughtItems pq.StringArray `json:"caught_items" gorm:"type:text[];null"`
+}
+
+// Resources as fish, bug and sea creatures
 type Fish struct {
 	gorm.Model
 	Name               string         `json:"name" gorm:"text;not null"`
