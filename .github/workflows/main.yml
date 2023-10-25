@@ -51,6 +51,3 @@ jobs:
             --deployment-group-name development_group \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
-            --db-user "${{ env.DB_USER }}" \
-            --db-password "${{ env.DB_PASSWORD }}" \
-            --db-name "${{ env.DB_NAME }}"
