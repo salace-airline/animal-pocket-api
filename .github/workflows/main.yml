@@ -36,6 +36,12 @@ jobs:
           echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+     # Step 2.1
+      - name: Debug
+        run: |
+          echo "DB_USER: ${{ env.DB_USER }}"
+          echo "DB_PASSWORD: ${{ env.DB_PASSWORD }}"
+          echo "DB_NAME: ${{ env.DB_NAME }}"
       # Step 3
       - name: Create CodeDeploy Deployment
         id: deploy
@@ -45,3 +51,6 @@ jobs:
             --deployment-group-name development_group \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+            --db-user ${{ env.DB_USER }} \
+            --db-password ${{ env.DB_PASSWORD }} \
+            --db-name ${{ env.DB_NAME }}
