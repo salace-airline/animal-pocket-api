@@ -1,0 +1,10 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the API used by the iOS application named Animal Pocket.",
+        "title": "Animal Pocket API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {}
+}

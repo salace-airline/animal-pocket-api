@@ -8,6 +8,10 @@ import (
 )
 
 func main() {
+	// @title Animal Pocket API
+	// @version 1.0
+	// @description This is the API used by the iOS application named Animal Pocket.
+	
 	// Connect and fill database with resources
 	database.ConnectDb()
 	database.Migrate()

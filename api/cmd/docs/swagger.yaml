@@ -1,0 +1,7 @@
+info:
+  contact: {}
+  description: This is the API used by the iOS application named Animal Pocket.
+  title: Animal Pocket API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

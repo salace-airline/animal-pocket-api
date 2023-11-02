@@ -6,7 +6,13 @@ FROM golang:1.20.2
 
 WORKDIR /usr/src/app
 
-RUN go install github.com/cosmtrek/air@latest
+RUN go mod init github.com/salace-airline/animalpocketresources
+
+RUN go install github.com/swaggo/swag/cmd/swag@latest
+
+RUN swag init
 
 COPY . .
 RUN go mod tidy
+
+RUN go install github.com/cosmtrek/air@latest
