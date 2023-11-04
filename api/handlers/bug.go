@@ -11,5 +11,5 @@ func GetBugs(c *fiber.Ctx) error {
 	bugs := []models.Bug{}
 	database.DB.Db.Find(&bugs)
 
-	return c.Status(200).JSON(bugs)
+	return c.Status(fiber.StatusOK).JSON(bugs)
 }

@@ -49,7 +49,7 @@ func ConnectDb() {
 func Migrate() {
 	DB.Db.Migrator().DropTable(&models.User{}, &models.Fish{}, &models.Bug{}, &models.SeaCreature{})
 	log.Println("running migrations")
-	DB.Db.AutoMigrate(models.User{}, &models.Fish{}, &models.Bug{}, &models.SeaCreature{})
+	DB.Db.AutoMigrate(&models.User{}, &models.Fish{}, &models.Bug{}, &models.SeaCreature{})
 }
 
 func IntegrateResources() {
@@ -99,7 +99,7 @@ func IntegrateResources() {
 	fmt.Println("Bugs were successfully insert into database!")
 
 	// Sea creature table
-	fileSeaCreature, err := os.Open("./database/bugs.json")
+	fileSeaCreature, err := os.Open("./database/seaCreatures.json")
 	if err != nil {
 		log.Fatal(err)
 	}

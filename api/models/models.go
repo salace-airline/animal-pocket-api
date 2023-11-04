@@ -1,17 +1,26 @@
 package models
 
 import (
+	"github.com/go-playground/validator"
 	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
 // User informations and caught resources
 type User struct {
-	ID          uint           `json:"id"`
-	Name        string         `json:"name" validate:"required,min=3,max=20"`
-	Email       string         `json:"email" gorm:"unique" validate:"required,email"`
-	Password    []byte         `json:"-"` // json:"-" means password will not return with the response
-	CaughtItems pq.StringArray `json:"caught_items" gorm:"type:text[];null"`
+	ID                 uint          `json:"id"`
+	Name               string        `json:"name" validate:"required,min=3,max=20"`
+	Email              string        `json:"email" gorm:"unique" validate:"required,email"`
+	Password           []byte        `json:"-"` // json:"-" means password will not return with the response
+	CaughtFish         pq.Int32Array `json:"caught_fish" gorm:"type:integer[];"`
+	CaughtBug          pq.Int32Array `json:"caught_bug" gorm:"type:integer[];"`
+	CaughtSeaCreatures pq.Int32Array `json:"caught_sea_creature" gorm:"type:integer[];"`
+}
+
+// Initialize the validator package
+func ValidateUser(user *User) error {
+	validate := validator.New()
+	return validate.Struct(user)
 }
 
 // Resources as fish, bug and sea creatures

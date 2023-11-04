@@ -16,8 +16,8 @@ func setupRoutes(app *fiber.App) {
 
 	// User
 	app.Get("/user", handlers.GetActualUser)
+	app.Patch("/user", handlers.UpdateUser)
 	/* New api routes coming soon !
-	app.Patch("/user/:id", handlers.UpdateUser)
 	app.Delete("/user/:id", handlers.DeleteUser)*/
 
 	// Ressources

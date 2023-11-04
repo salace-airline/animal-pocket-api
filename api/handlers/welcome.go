@@ -5,5 +5,5 @@ import (
 )
 
 func GetWelcome(c *fiber.Ctx) error {
-	return c.SendString("Welcome to Animal Pocket API!")
+	return c.Status(fiber.StatusOK).SendString("Welcome to Animal Pocket API!")
 }

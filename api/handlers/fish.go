@@ -11,5 +11,5 @@ func GetFishes(c *fiber.Ctx) error {
 	fishes := []models.Fish{}
 	database.DB.Db.Find(&fishes)
 
-	return c.Status(200).JSON(fishes)
+	return c.Status(fiber.StatusOK).JSON(fishes)
 }
