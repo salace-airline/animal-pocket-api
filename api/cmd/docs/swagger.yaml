@@ -1,7 +1,55 @@
+basePath: /
+definitions:
+  models.User:
+    type: object
+host: 13.39.189.214:3000
 info:
   contact: {}
-  description: This is the API used by the iOS application named Animal Pocket.
+  description: 'You can found all the ressources in Animal Crossing: New Horizons.
+    It is used by the iOS application named Animal Pocket.'
   title: Animal Pocket API
   version: "1.0"
-paths: {}
+paths:
+  /:
+    get:
+      consumes:
+      - '*/*'
+      description: Because you need a sweet start before using our API.
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Welcome to you!
+      tags:
+      - root
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      description: Create new user
+      parameters:
+      - description: User
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create new user
+      tags:
+      - users
+schemes:
+- http
 swagger: "2.0"

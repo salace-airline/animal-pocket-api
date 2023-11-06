@@ -6,6 +6,7 @@ require (
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/go-openapi/spec v0.20.9 // indirect
+	github.com/gofiber/contrib/swagger v1.1.0
 	github.com/gofiber/fiber/v2 v2.49.2
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/lib/pq v1.10.9

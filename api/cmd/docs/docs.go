@@ -14,17 +14,84 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Because you need a sweet start before using our API.",
+                "consumes": [
+                    "*/*"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "Welcome to you!",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/user/create": {
+            "post": {
+                "description": "Create new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create new user",
+                "parameters": [
+                    {
+                        "description": "User",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.User": {
+            "type": "object"
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "",
-	BasePath:         "",
-	Schemes:          []string{},
+	Host:             "13.39.189.214:3000",
+	BasePath:         "/",
+	Schemes:          []string{"http"},
 	Title:            "Animal Pocket API",
-	Description:      "This is the API used by the iOS application named Animal Pocket.",
+	Description:      "You can found all the ressources in Animal Crossing: New Horizons. It is used by the iOS application named Animal Pocket.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

@@ -1,12 +1,14 @@
 package main
 
 import (
+	_ "github.com/salace-airline/animalpocketresources/cmd/docs"
 	"github.com/salace-airline/animalpocketresources/handlers"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func setupRoutes(app *fiber.App) {
+	// Welcome!
 	app.Get("/", handlers.GetWelcome)
 
 	// Authentication
