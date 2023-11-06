@@ -17,6 +17,8 @@ func main() {
 
 	// Allow cors for cookie
 	app.Use(cors.New(cors.Config{
+		AllowHeaders:     "Origin, Content-Type, Accept",
+		AllowMethods:     "GET, POST, PATCH, DELETE",
 		AllowCredentials: true,
 	}))
 

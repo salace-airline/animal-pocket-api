@@ -19,7 +19,11 @@ func Register(c *fiber.Ctx) error {
 
 	err := c.BodyParser(&data)
 	if err != nil {
-		return err
+		return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{
+			"status":  "error",
+			"message": "Something's wrong with your input",
+			"data":    err,
+		})
 	}
 
 	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
@@ -30,9 +34,20 @@ func Register(c *fiber.Ctx) error {
 		Password: password,
 	}
 
-	database.DB.Db.Create(&user)
+	err = database.DB.Db.Create(&user).Error
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"status":  "error",
+			"message": "Could not create user",
+			"data":    err,
+		})
+	}
 
-	return c.JSON(user)
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"status":  "success",
+		"message": "User has created",
+		"data":    user,
+	})
 }
 
 func Login(c *fiber.Ctx) error {
@@ -49,16 +64,16 @@ func Login(c *fiber.Ctx) error {
 	database.DB.Db.Where("email=?", data["email"]).First(&user)
 
 	if user.ID == 0 {
-		c.Status(fiber.StatusNotFound)
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"status":  "not found",
 			"message": "user not found",
 		})
 	}
 
 	err = bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"]))
 	if err != nil {
-		c.Status(fiber.StatusBadRequest)
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"status":  "bad request",
 			"message": "incorrect password",
 		})
 	}
@@ -71,8 +86,8 @@ func Login(c *fiber.Ctx) error {
 
 	token, err := claims.SignedString([]byte(SecretKey))
 	if err != nil {
-		c.Status(fiber.StatusInternalServerError)
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"status":  "server error",
 			"message": "could not login",
 		})
 	}
@@ -87,33 +102,11 @@ func Login(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 
-	return c.JSON(fiber.Map{
-		"message": "success",
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"status":  "success",
+		"message": "user connected",
+		"data":    user,
 	})
-}
-
-func GetActualUser(c *fiber.Ctx) error {
-
-	cookie := c.Cookies("auth")
-
-	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
-
-	if err != nil {
-		c.Status(fiber.StatusUnauthorized)
-		return c.JSON(fiber.Map{
-			"message": "unauthenticated",
-		})
-	}
-
-	claims := token.Claims.(*jwt.RegisteredClaims)
-
-	var user models.User
-
-	database.DB.Db.Where("id=?", claims.Issuer).First(&user)
-
-	return c.JSON(user)
 }
 
 func Logout(c *fiber.Ctx) error {
@@ -127,7 +120,8 @@ func Logout(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 
-	return c.JSON(fiber.Map{
-		"message": "success",
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"status":  "success",
+		"message": "user has logged out",
 	})
 }
