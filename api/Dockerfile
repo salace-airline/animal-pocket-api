@@ -8,9 +8,9 @@ WORKDIR /usr/src/app
 
 RUN go mod init github.com/salace-airline/animalpocketresources
 
-RUN go install github.com/swaggo/swag/cmd/swag@latest
-
-RUN swag init
+RUN go get -u github.com/gofiber/contrib/swagger
+RUN go get -u github.com/swaggo/swag
+RUN go get -u github.com/gofiber/swagger
 
 COPY . .
 RUN go mod tidy

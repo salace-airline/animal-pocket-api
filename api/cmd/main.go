@@ -1,10 +1,10 @@
 package main
 
 import (
-	_ "github.com/salace-airline/animalpocketresources/cmd/docs"
-	"github.com/salace-airline/animalpocketresources/database"
+	_ "github.com/salace-airline/animalpocketresources/docs"
+	"github.com/salace-airline/animalpocketresources/cmd/database"
 
-	"github.com/gofiber/contrib/swagger"
+	"github.com/gofiber/swagger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
@@ -24,12 +24,8 @@ func main() {
 
 	app := fiber.New()
 
-	app.Get("/swagger/*", swagger.New(swagger.Config{
-		BasePath: "/",
-		FilePath: "./cmd/docs/swagger.json",
-		Path:     "docs",
-		Title:    "Swagger API Docs",
-	}))
+	// Package github.com/gofiber/swagger
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Allow cors for cookie
 	app.Use(cors.New(cors.Config{

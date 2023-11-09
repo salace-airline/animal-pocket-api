@@ -1,0 +1,164 @@
+basePath: /
+definitions:
+  models.BugSwagger:
+    properties:
+      available_time:
+        type: string
+      available_time_array:
+        items:
+          type: integer
+        type: array
+      catch_phrase:
+        type: string
+      catch_phrase_alt:
+        items:
+          type: string
+        type: array
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      icon_uri:
+        type: string
+      id:
+        type: integer
+      image_uri:
+        type: string
+      is_all_day:
+        type: boolean
+      is_all_year:
+        type: boolean
+      location:
+        type: string
+      month-southern:
+        type: string
+      month_northern:
+        type: string
+      month_northern_array:
+        items:
+          type: integer
+        type: array
+      month_southern_array:
+        items:
+          type: integer
+        type: array
+      museum_phrase:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      price_flick:
+        type: integer
+      rarity:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.UserSwagger:
+    properties:
+      caught_bug:
+        items:
+          type: integer
+        type: array
+      caught_fish:
+        items:
+          type: integer
+        type: array
+      caught_sea_creature:
+        items:
+          type: integer
+        type: array
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        maxLength: 20
+        minLength: 3
+        type: string
+    required:
+    - email
+    - name
+    type: object
+host: 13.39.189.214:3000
+info:
+  contact: {}
+  description: 'You can found all the ressources in Animal Crossing: New Horizons.
+    It is used by the iOS application named Animal Pocket.'
+  title: Animal Pocket API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - '*/*'
+      description: Because you need a sweet start before using our API.
+      responses:
+        "200":
+          description: Welcome to Animal Pocket API!
+          schema:
+            type: string
+      summary: Welcome to you!
+      tags:
+      - basic
+  /bug:
+    get:
+      consumes:
+      - application/json
+      description: Get all bugs which exists
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.BugSwagger'
+            type: array
+        "422":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Get bugs
+      tags:
+      - resources
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create an account for a user
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserSwagger'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/models.UserSwagger'
+            type: array
+        "422":
+          description: error
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: Register
+      tags:
+      - user
+schemes:
+- http
+swagger: "2.0"

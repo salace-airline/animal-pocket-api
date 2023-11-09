@@ -24,7 +24,6 @@ services:
       - postgres-db:/var/lib/postgresql/data
   swagger-ui:
     image: swaggerapi/swagger-ui
-
     environment:
       - SWAGGER_JSON=/docs/swagger.json
     ports:

@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "github.com/salace-airline/animalpocketresources/cmd/docs"
-	"github.com/salace-airline/animalpocketresources/handlers"
+	"github.com/salace-airline/animalpocketresources/cmd/handlers"
+	_ "github.com/salace-airline/animalpocketresources/docs"
 
 	"github.com/gofiber/fiber/v2"
 )
