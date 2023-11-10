@@ -12,9 +12,9 @@ type User struct {
 	Name               string        `json:"name" validate:"required,min=3,max=20"`
 	Email              string        `json:"email" gorm:"unique" validate:"required,email"`
 	Password           []byte        `json:"-"` // json:"-" means password will not return with the response
-	CaughtFish         pq.Int32Array `json:"caught_fish" gorm:"type:integer[];"`
-	CaughtBug          pq.Int32Array `json:"caught_bug" gorm:"type:integer[];"`
-	CaughtSeaCreatures pq.Int32Array `json:"caught_sea_creature" gorm:"type:integer[];"`
+	CaughtFish         pq.Int32Array `json:"caught_fish" gorm:"type:integer[];not null"`
+	CaughtBug          pq.Int32Array `json:"caught_bug" gorm:"type:integer[]; not null"`
+	CaughtSeaCreatures pq.Int32Array `json:"caught_sea_creature" gorm:"type:integer[]; not null"`
 }
 
 // Initialize the validator package
