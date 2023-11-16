@@ -17,6 +17,10 @@ func setupRoutes(app *fiber.App) {
 	// User
 	app.Get("/user", handlers.GetActualUser)
 	app.Patch("/user", handlers.UpdateUser)
+	app.Patch("/user/", handlers.UpdateUser)
+	app.Patch("/user/fish", handlers.UpdateUserFish)
+	app.Patch("/user/bug", handlers.UpdateUserBug)
+	app.Patch("/user/sea-creature", handlers.UpdateUserSeaCreature)
 	/* New api routes coming soon !
 	app.Delete("/user/:id", handlers.DeleteUser)*/
 
