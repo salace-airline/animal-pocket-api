@@ -21,7 +21,7 @@ var DB Dbinstance
 
 func ConnectDb() {
 	dsn := fmt.Sprintf(
-		"user=%s password=%s dbname=%s",
+		"user=%s password=%s dbname=%s host=db port=5432",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_NAME"),
