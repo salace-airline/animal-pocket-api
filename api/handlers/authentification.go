@@ -6,8 +6,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/salace-airline/animalpocketresources/database"
-	"github.com/salace-airline/animalpocketresources/models"
+	"github.com/salace-airline/animalpocketapi/database"
+	"github.com/salace-airline/animalpocketapi/models"
 	"golang.org/x/crypto/bcrypt"
 )
 

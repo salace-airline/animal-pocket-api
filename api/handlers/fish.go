@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"github.com/salace-airline/animalpocketresources/database"
-	"github.com/salace-airline/animalpocketresources/models"
+	"github.com/salace-airline/animalpocketapi/database"
+	"github.com/salace-airline/animalpocketapi/models"
 
 	"github.com/gofiber/fiber/v2"
 )

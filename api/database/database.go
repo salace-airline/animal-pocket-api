@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/salace-airline/animalpocketresources/models"
+	"github.com/salace-airline/animalpocketapi/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

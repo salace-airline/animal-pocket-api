@@ -1,4 +1,4 @@
-module github.com/salace-airline/animalpocketresources
+module github.com/salace-airline/animalpocketapi
 
 go 1.13
 

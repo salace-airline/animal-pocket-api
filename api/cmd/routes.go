@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/salace-airline/animalpocketresources/handlers"
+	"github.com/salace-airline/animalpocketapi/handlers"
 
 	"github.com/gofiber/fiber/v2"
 )

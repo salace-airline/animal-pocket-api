@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/salace-airline/animalpocketresources/database"
+	"github.com/salace-airline/animalpocketapi/database"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
