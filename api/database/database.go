@@ -21,14 +21,16 @@ var DB Dbinstance
 
 func ConnectDb() {
 	dsn := fmt.Sprintf(
-		"user=%s password=%s dbname=%s host=db port=5432",
+		"user=%s password=%s dbname=%s host=%s port=%s",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_NAME"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT")
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
+		Logger: logger.Default.LogMode(logger.Info)
 	})
 
 	if err != nil {

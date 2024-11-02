@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetActualUser(c *fiber.Ctx) error {
+func GetUser(c *fiber.Ctx) error {
 	cookie := c.Cookies("auth")
 	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil

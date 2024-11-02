@@ -2,11 +2,11 @@
 # to run golang from the command-line
 
 # Build the Golang environment
-FROM golang:1.20.2
+FROM golang:1.23
 
 WORKDIR /usr/src/app
 
-RUN go install github.com/cosmtrek/air@latest
+RUN go install github.com/air-verse/air@latest
 
 COPY . .
 RUN go mod tidy

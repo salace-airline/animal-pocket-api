@@ -1,11 +1,11 @@
 module github.com/salace-airline/animalpocketapi
 
-go 1.13
+go 1.23
 
 require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator v9.31.0+incompatible
-	github.com/gofiber/fiber/v2 v2.49.2
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/lib/pq v1.10.9
