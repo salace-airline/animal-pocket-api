@@ -8,11 +8,21 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetUser(c *fiber.Ctx) error {
+// Initialize the validator package
+func ValidateUser(user *User) error {
+	validate := validator.New()
+	return validate.Struct(user)
+}
+
+func CheckUserConnected(c *fiber.Ctx) error {
 	cookie := c.Cookies("auth")
 	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil
 	})
+}
+
+func GetUser(c *fiber.Ctx) error {
+	CheckUserConnected(c)
 
 	var user models.User
 	if err != nil && user.ID == 0 {
@@ -25,17 +35,13 @@ func GetUser(c *fiber.Ctx) error {
 	claims := token.Claims.(*jwt.RegisteredClaims)
 	database.DB.Db.Where("id=?", claims.Issuer).First(&user)
 
-	return c.JSON(user)
+	return c.Status(fiber.StatusOK).JSON(user)
 }
 
 func UpdateUser(c *fiber.Ctx) error {
-	cookie := c.Cookies("auth")
-	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
+	CheckUserConnected(c)
 
 	var actualUser models.User
-
 	if err != nil && actualUser.ID == 0 {
 		c.Status(fiber.StatusUnauthorized)
 		return c.JSON(fiber.Map{
@@ -99,15 +105,13 @@ func UpdateUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"status":  "success",
 			"message": "user updated",
+			"data":    actualUser,
 		})
 	}
 }
 
 func UpdateUserFish(c *fiber.Ctx) error {
-	cookie := c.Cookies("auth")
-	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
+	CheckUserConnected(c)
 
 	var actualUser models.User
 
@@ -153,16 +157,14 @@ func UpdateUserFish(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
 				"status":  "success",
 				"message": "user updated",
+				"data":    actualUser,
 			})
 		}
 	}
 }
 
 func UpdateUserBug(c *fiber.Ctx) error {
-	cookie := c.Cookies("auth")
-	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
+	CheckUserConnected(c)
 
 	var actualUser models.User
 
@@ -208,6 +210,7 @@ func UpdateUserBug(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
 				"status":  "success",
 				"message": "user updated",
+				"data":    actualUser,
 			})
 		}
 
@@ -215,10 +218,7 @@ func UpdateUserBug(c *fiber.Ctx) error {
 }
 
 func UpdateUserSeaCreature(c *fiber.Ctx) error {
-	cookie := c.Cookies("auth")
-	token, err := jwt.ParseWithClaims(cookie, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
+	CheckUserConnected(c)
 
 	var actualUser models.User
 
@@ -264,6 +264,7 @@ func UpdateUserSeaCreature(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusOK).JSON(fiber.Map{
 				"status":  "success",
 				"message": "user updated",
+				"data":    actualUser,
 			})
 		}
 	}
